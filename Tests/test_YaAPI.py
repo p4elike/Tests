@@ -1,23 +1,14 @@
-import requests
-import os
+import unittest
+import YA_translater
 
 
-# функция перевода текста
-def translate_it(text):
-    URL = 'https://translate.yandex.net/api/v1.5/tr.json/translate'
-    API = 'trnsl.1.1.20200414T142315Z.82f7f234a435ac4f.5c0f9da21d5fd976283bc1c8447d85d38d7c6109'
+class TestYandexTranslator(unittest.TestCase):
+    def test_translate(self):
+        self.assertEqual(YA_translater.translate_it('hi')['text'][0], 'привет')
 
-    params = {
-        'key': API,
-        'text': text,
-        'lang': 'en-ru',
-    }
-
-    response = requests.get(URL, params=params)
-    text = response.json()
-
-    return text
+    def test_request_code(self):
+        self.assertEqual(YA_translater.translate_it('hi')['code'], 200)
 
 
 if __name__ == '__main__':
-    print(translate_it('so so'))
+    unittest.main()
